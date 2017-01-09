@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 
 class MyListener implements ActionListener {
 	JTextField jf;
@@ -21,6 +22,10 @@ class MyListener implements ActionListener {
 		switch (str) {
 		case "C":
 			jf.setText("");
+			break;
+		case "=":
+			CalLogic cal = new CalLogic(jf.getText());
+			jf.setText("" + cal.result());
 			break;
 		case "←":
 			if(jf.getText().length() != 0 ) {
@@ -47,12 +52,13 @@ class MyFrame {
 		Color lightgreen = new Color(163, 206, 39);
 		Color deepblue = new Color(47, 72, 78);
 		
-		f = new JFrame("계산기");
+		f = new JFrame("계산기"); // 제목을 지정
 		jf = new JTextField();
-//		jf.setText("0으로 나눌 수 없습니다.");
+		jf.setEditable(false); // 사용자는 버튼 이외의 방법으로 textfield에 접근할 수 없다.
 		jf.setBackground(lightgreen);
 		jf.setForeground(deepgreen);
 		jf.setFont(midfont);
+		jf.setHorizontalAlignment(SwingConstants.RIGHT);
 		
 		MyListener listener = new MyListener(jf);
 
@@ -78,7 +84,6 @@ class MyFrame {
 		for (int i = 1; i < b.length; i++) {
 			b[i].addActionListener(listener);
 			c.gridx = (i % 3) - 1;
-			// c.gridx = i;
 			switch ((i - 1) / 3) {
 			case 0:
 				c.gridy = 1;
@@ -124,7 +129,7 @@ class MyFrame {
 		f.pack();
 		f.setVisible(true);
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		f.setLocation(300, 500);
+		f.setLocation(500, 300);
 		f.setSize(330, 300);
 	}
 
@@ -133,7 +138,7 @@ class MyFrame {
 public class CalGUIGridBag {
 
 	public static void main(String[] args) {
-		MyFrame m = new MyFrame();
+		new MyFrame();
 	}
 
 }
